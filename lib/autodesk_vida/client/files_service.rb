@@ -3,7 +3,7 @@ module AutodeskVida
     module FilesService
       def supported_formats
         request = request(supported_formats_url)
-        request.headers('Authorization'.freeze => access_token.to_s)
+        request.headers(auth_header)
         request.get
       end
 
@@ -15,7 +15,7 @@ module AutodeskVida
         request = request(upload_file_url(bucket,
                                           File.basename(file_path)))
         request.headers('Content-Length'.freeze => File.size(file_path).to_s)
-        request.headers('Authorization'.freeze => access_token.to_s)
+        request.headers(auth_header)
 
         request.put_file(file_path)
       end

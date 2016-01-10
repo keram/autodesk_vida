@@ -7,14 +7,14 @@ module AutodeskVida
       # "policyKey"=>"transient"}
       def create_bucket(retention_policy:, bucket_key:)
         request = request(create_bucket_url)
-        request.headers('Authorization'.freeze => access_token.to_s)
+        request.headers(auth_header)
         request.post_json(policyKey: retention_policy,
                           bucketKey: bucket_key)
       end
 
       def bucket(key)
         request = request(bucket_details_url(key))
-        request.headers('Authorization'.freeze => access_token.to_s)
+        request.headers(auth_header)
         request.get
       end
 

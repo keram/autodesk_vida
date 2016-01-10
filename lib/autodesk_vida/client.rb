@@ -16,10 +16,10 @@ module AutodeskVida
       Module.nesting.last.http_client.new(uri)
     end
 
-    attr_reader :access_token
+    attr_reader :auth_header
 
     def initialize(access_token)
-      @access_token = access_token
+      @auth_header = { 'Authorization'.freeze => access_token.to_s }
     end
 
     private

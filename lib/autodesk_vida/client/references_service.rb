@@ -3,7 +3,7 @@ module AutodeskVida
     module ReferencesService
       def reference=(reference)
         request = request(set_reference_url)
-        request.headers('Authorization'.freeze => access_token.to_s)
+        request.headers(auth_header)
         request.post_json(reference)
       end
       alias_method :set_reference, :reference=

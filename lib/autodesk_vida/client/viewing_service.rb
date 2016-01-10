@@ -12,7 +12,7 @@ module AutodeskVida
       def register_with_headers(params:, headers:)
         request = request(register_url)
         request.headers(
-          headers.merge('Authorization'.freeze => access_token.to_s)
+          headers.merge(auth_header)
         )
 
         request.post_json(params)
@@ -24,9 +24,7 @@ module AutodeskVida
 
       def status(params)
         request = request(status_url(params.fetch(URN_KEY)))
-        request.headers(
-          'Authorization'.freeze => access_token.to_s
-        )
+        request.headers(auth_header)
 
         request.get
       end
@@ -58,9 +56,7 @@ module AutodeskVida
         request = request(
           thumbnail_url(params.fetch(URN_KEY),
                         params.reject { |key| key == URN_KEY }))
-        request.headers(
-          'Authorization'.freeze => access_token.to_s
-        )
+        request.headers(auth_header)
 
         request.get
       end
