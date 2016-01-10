@@ -52,13 +52,13 @@ module AutodeskVida
           .put(uri.request_uri, data))
     end
 
-    def put_file(file_path)
+    def put_file(file)
       default_headers
 
       connection.builder.handlers.clear
       connection.adapter(Faraday.default_adapter)
 
-      process(connection.put(uri.request_uri, File.read(file_path)))
+      process(connection.put(uri.request_uri, file))
     end
 
     def post_json(data)

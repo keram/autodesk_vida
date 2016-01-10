@@ -17,7 +17,7 @@ module AutodeskVida
         request.headers('Content-Length'.freeze => File.size(file_path).to_s)
         request.headers(auth_header)
 
-        request.put_file(file_path)
+        request.put_file(File.new(file_path))
       end
 
       def upload_file_url(bucket, file_name)

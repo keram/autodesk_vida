@@ -107,13 +107,13 @@ module AutodeskVida
       process(execute(request))
     end
 
-    def put_file(file_path)
+    def put_file(file)
       request = klass.put(uri)
 
       default_headers(request)
       custom_headers(request)
 
-      request.body = File.read(file_path)
+      request.body = file
 
       process(execute(request))
     end

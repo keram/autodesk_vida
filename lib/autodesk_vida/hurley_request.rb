@@ -67,8 +67,8 @@ module AutodeskVida
           .put(uri.request_uri, data))
     end
 
-    def put_file(file_path)
-      put(File.read(file_path))
+    def put_file(file)
+      put(file)
     end
 
     def headers(headers)
