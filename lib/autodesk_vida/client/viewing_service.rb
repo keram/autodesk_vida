@@ -37,8 +37,7 @@ module AutodeskVida
       #
       # urn - Required. The url encoded URN of the item.
       # It only accepts the URN of viewing service
-      # ( urn:adsk.viewing:fs.file:url-safe-base64-encoded-seed-urn/rest/of/the/path) :
-      #  urn%3Aadsk.viewing%3Afs.file%3Aurl-safe-base64-encoded-seed-urn%2Frest%da/net_http_request.rb:8:3:2Fof%2Fthe%2Fpath
+      # ( urn:adsk.viewing:fs.file:url-safe-base64-urn/rest/of/the/path)
       #  The URN could be retrieved from GET viewable API by specifying
       #  header: x-ads-transform-resource-urn = static-url
       #
