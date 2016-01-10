@@ -1,0 +1,40 @@
+#!/usr/bin/env ruby
+
+require 'bundler/setup'
+require 'autodesk_vida'
+require 'yaml'
+require 'irb'
+require 'byebug'
+
+# You can add fixtures and/or initialization code here to make experimenting
+# with your gem easier. You can also use a different console, if you like.
+
+config_file = '.autodeskrc'
+unless File.exist?(File.join(ENV['HOME'], config_file))
+  fail "No configuration file `#{config_file}` found in your home directory"
+end
+
+@config = YAML.load_file(File.join(ENV['HOME'], config_file))['autodesk_vida']
+@auth = AutodeskVida::Authentication.new @config[:credentials]
+@token = @auth.perform
+@client = AutodeskVida::Client.new @token
+
+def client
+  @client
+end
+
+def file
+  'test/fixtures/Mirror.3DS'
+end
+
+def f
+  { 'bucketKey' => 'loremipsum', 'objectId' => 'urn:adsk.objects:os.object:loremipsum/Mirror.3DS', 'objectKey' => 'Mirror.3DS', 'sha1' => '8ed16e675d47ea8fe49989804b3a667781094f98', 'size' => 1757, 'contentType' => 'application/x-www-form-urlencoded', 'location' => 'https://developer.api.autodesk.com/oss/v2/buckets/loremipsum/objects/Mirror.3DS' }
+end
+
+def urn
+  { 'urn' => 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bG9yZW1pcHN1bS9NaXJyb3IuM0RT' }
+end
+
+puts "client.upload_file('loremipsum', file)"
+
+IRB.start
