@@ -11,13 +11,13 @@ module AutodeskVida
         URI(Endpoint::SUPPORTED_FORMATS)
       end
 
-      def upload_file(bucket, file_path)
+      def upload_file(bucket, file)
         request = request(upload_file_url(bucket,
-                                          File.basename(file_path)))
-        request.headers('Content-Length'.freeze => File.size(file_path).to_s)
+                                          File.basename(file.path)))
+        request.headers('Content-Length'.freeze => file.size.to_s)
         request.headers(auth_header)
 
-        request.put_file(File.new(file_path))
+        request.put_file(file)
       end
 
       def upload_file_url(bucket, file_name)

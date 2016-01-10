@@ -19,11 +19,7 @@ end
 @token = @auth.perform
 @client = AutodeskVida::Client.new @token
 
-def client
-  @client
-end
-
-def file
+def file_path
   'test/fixtures/Mirror.3DS'
 end
 
@@ -35,6 +31,6 @@ def urn
   { 'urn' => 'dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6bG9yZW1pcHN1bS9NaXJyb3IuM0RT' }
 end
 
-puts "client.upload_file('loremipsum', file)"
+puts "@client.upload_file('loremipsum', File.new(file_path))"
 
 IRB.start

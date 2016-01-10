@@ -65,8 +65,10 @@ module AutodeskVida
       describe '#upload_file' do
         let(:bucket) { 'testmla' }
         let(:file_name) { 'Locker.3DS' }
-        let(:file_path) do
-          File.join(File.dirname(__FILE__), '..', '..', 'fixtures', file_name)
+        let(:upload_file) do
+          File.new(
+            File.join(
+              File.dirname(__FILE__), '..', '..', 'fixtures', file_name))
         end
 
         let(:success_response) do
@@ -87,7 +89,7 @@ module AutodeskVida
           }
         end
 
-        it 'requires bucket_key and file_path as arguments' do
+        it 'requires bucket_key and file as arguments' do
           proc { client.upload_file }.must_raise ArgumentError
           proc { client.upload_file('bucket') }.must_raise ArgumentError
         end
@@ -97,7 +99,7 @@ module AutodeskVida
                        "#{Endpoint::BUCKETS}/#{bucket}/objects/#{file_name}")
             .with(headers: request_headers).to_return(success_response)
 
-          assert client.upload_file(bucket, file_path).is_a? Hash
+          assert client.upload_file(bucket, upload_file).is_a? Hash
         end
 
         it 'returns objectId' do
@@ -105,7 +107,7 @@ module AutodeskVida
                        "#{Endpoint::BUCKETS}/#{bucket}/objects/#{file_name}")
             .with(headers: request_headers).to_return(success_response)
 
-          upload = client.upload_file(bucket, file_path)
+          upload = client.upload_file(bucket, upload_file)
           assert upload['objectId'].is_a? String
         end
 
@@ -114,7 +116,7 @@ module AutodeskVida
                        "#{Endpoint::BUCKETS}/#{bucket}/objects/#{file_name}")
             .with(headers: request_headers).to_return(success_response)
 
-          upload = client.upload_file(bucket, file_path)
+          upload = client.upload_file(bucket, upload_file)
           assert upload['location'].is_a? String
         end
       end
