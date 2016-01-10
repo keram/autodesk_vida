@@ -57,12 +57,6 @@ module AutodeskVida
       request
     end
 
-    def self.json_request_default_headers(request)
-      default_headers(request)
-      request['Content-Type'.freeze] = JSON_CONTENT_TYPE
-      request
-    end
-
     def initialize(uri)
       @headers = {}
       super(uri)
@@ -72,8 +66,7 @@ module AutodeskVida
       request = klass.post(uri)
       klass.form_data(request, data)
 
-      default_headers(request)
-      custom_headers(request)
+      request_headers(request)
 
       process(execute(request))
     end
@@ -82,8 +75,9 @@ module AutodeskVida
       request = klass.post(uri)
       request.body = data.to_json
 
-      json_request_default_headers(request)
-      custom_headers(request)
+      headers('Content-Type'.freeze => JSON_CONTENT_TYPE)
+
+      request_headers(request)
 
       process(execute(request))
     end
@@ -91,8 +85,7 @@ module AutodeskVida
     def get
       request = klass.get(uri)
 
-      default_headers(request)
-      custom_headers(request)
+      request_headers(request)
 
       process(execute(request))
     end
@@ -101,8 +94,7 @@ module AutodeskVida
       request = klass.put(uri)
       klass.form_data(request, data)
 
-      default_headers(request)
-      custom_headers(request)
+      request_headers(request)
 
       process(execute(request))
     end
@@ -110,8 +102,7 @@ module AutodeskVida
     def put_file(file)
       request = klass.put(uri)
 
-      default_headers(request)
-      custom_headers(request)
+      request_headers(request)
 
       request.body = file
 
@@ -128,12 +119,9 @@ module AutodeskVida
       connection.request(request)
     end
 
-    def default_headers(request)
+    def request_headers(request)
       klass.default_headers(request)
-    end
-
-    def json_request_default_headers(request)
-      klass.json_request_default_headers(request)
+      custom_headers(request)
     end
 
     def custom_headers(request)
